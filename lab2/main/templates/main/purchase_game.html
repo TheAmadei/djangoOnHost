@@ -1,0 +1,12 @@
+{% extends "main/layout.html" %}
+
+{% block title%}Покупка игры{% endblock %}
+
+{% block content%}
+    <h1>Покупка игры</h1>
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Купить</button>
+    </form>
+{% endblock %}

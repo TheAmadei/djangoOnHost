@@ -1,0 +1,51 @@
+{% extends "main/layout.html" %}
+
+{% block title%}{{ game.title }}{% endblock %}
+
+{% block content%}
+    <div class="content_view">
+        <div class="alert alert-warning">
+            <h3>{{ game.title }}</h3>
+            <p>Аннонс: {{ game.anounce }}</p>
+            <h5>Жанр: </h5>
+            {% if game.Ganre %}
+                ММО
+            {% endif %}
+            {% if game.GanreTwo %}
+                Стратегия
+            {% endif %}
+            <p>{{ game.discription }}</p>
+            <p>Цена: {{ game.price }}</p>
+            {% if user.is_authenticated %}
+                {% if game.is_purchased_by_current_user %}
+                    <!-- Код для случая, если игра куплена текущим пользователем -->
+                    <p>Вы уже купили эту игру.</p>
+                {% else %}
+                    <!-- Код для случая, если игра не куплена текущим пользователем -->
+                    <form method="post" action="{% url 'purchase_game' game_id=game.id %}">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-success">Купить</button>
+                    </form>
+                {% endif %}
+            {% else %}
+                <p>Для покупки игры войдите в свой аккаунт.</p>
+            {% endif %}
+            <!-- {% if request.user.is_authenticated %} -->
+                <!-- Добавьте форму для каждой игры -->
+                <!-- <form method="post" action="{% url 'main:home' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="game_id" value="{{ game.id }}">
+                    <button type="submit">Купить игру</button>
+                </form>
+            {% else %}
+                <p>Чтобы купить игру, вам необходимо <a href="{% url 'login' %}">Авторизоваться</a>.</p>
+            {% endif %} -->
+
+            {% if request.user.is_staff %}
+            <a href="{% url 'game-update' game.id  %}" class="btn btn-warning">Редактировать</a>
+            <a href="{% url 'game-delete' game.id  %}" class="btn btn-warning">Удалить</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

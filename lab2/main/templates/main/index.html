@@ -1,0 +1,31 @@
+{% extends "main/layout.html" %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+<!-- <div class="alert alert-info">
+    <h3>Самая популярная игра: {{ popular_genre.title }}</h3>
+</div>
+
+<div class="alert alert-success">
+    <h3>Популярность жанров по покупкам:</h3>
+    <p>ММО: {{ genres_purchase_count.1.purchase_count }}</p>
+    <p>Стратегия: {{ genres_purchase_count.0.purchase_count }}</p>
+</div> -->
+    {% for el in records %}
+        <div class="alert alert-warning">
+            <h3>{{ el.title }}</h3>
+            <p>{{ el.anounce }}</p>
+            <h5>Жанры: </h5>
+            {% if el.Ganre %}
+                <p>ММО</p>
+            {% endif %}
+
+            {% if el.GanreTwo %}
+                <p>Стратегия</p>
+            {% endif %}
+
+            <a href="{% url 'game_detail' el.id %}" class="btn btn-warning">Подробнее</a>
+        </div>
+    {% endfor %}
+{% endblock %}

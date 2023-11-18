@@ -1,0 +1,24 @@
+{% extends "main/layout.html" %}
+
+{% block title%}Форма по добавлению игры{% endblock %}
+
+{% block content%}
+        <div class="content_view">
+            <h1>Форма по добавлению игры</h1>
+            <form method="post" class="form">
+                {% csrf_token %}
+                {{ form.title }} <br>
+                {{ form.anounce }}<br>
+                {{ form.discription }}<br>
+                {{ form.date }}<br>
+                {{ form.user }}<br>
+                {{ form.Ganre }}
+                <label for="test">ММО</label>
+                {{ form.GanreTwo }}
+                <label for="test">Стратегия</label> <br>
+                {{ form.price }}
+                <span> {{ error }} </span>
+                <button class="btn btn-success" type="submit">Добавить игру</button>
+            </form>
+        </div>
+{% endblock %}

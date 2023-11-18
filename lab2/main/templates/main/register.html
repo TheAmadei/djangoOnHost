@@ -1,0 +1,22 @@
+{% extends "main/layout.html" %}
+{% block content %}
+  <h2>Registration</h2>
+  <form method="post" action="{% url 'register' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Register</button>
+  </form>
+
+  {% if form.errors %}
+    <div class="alert alert-danger">
+      <strong>Error:</strong> Please correct the errors below.
+      <ul>
+        {% for field, errors in form.errors.items %}
+          {% for error in errors %}
+            <li>{{ field }}: {{ error }}</li>
+          {% endfor %}
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+{% endblock %}

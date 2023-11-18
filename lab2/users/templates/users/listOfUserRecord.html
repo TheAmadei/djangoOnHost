@@ -1,0 +1,12 @@
+{% extends "main/layout.html" %}
+
+{% block title%}Главная страница{% endblock %}
+
+{% block content%}
+    <h1>Записи пользователя: {{ user.username }}</h1>
+    <ul>
+        {% for record in records %}
+            <li>{{ record.title }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

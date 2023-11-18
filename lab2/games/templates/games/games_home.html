@@ -1,0 +1,147 @@
+{% extends "main/layout.html" %}
+
+{% block title%}Главная страница{% endblock %}
+
+{% block links %}
+<style>
+    .messages { 
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Стиль для успешных сообщений */
+.messages .success {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+/* Стиль для сообщений об ошибках */
+.messages .error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #495057;
+}
+
+a{
+    text-decoration: none;
+    color: red;
+}
+
+.user-purchased-games {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-purchased-games h2{
+    color: #6c757d;
+}
+
+.purchased-games-list {
+    list-style: none;
+    padding: 0;
+}
+
+.purchased-games-list li {
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.purchased-games-list li:hover {
+    background-color: #f1f1f1;
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.game-title {
+    flex-grow: 1;
+    font-size: 20px;
+}
+
+.game-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.game-details p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.game-details p:last-child {
+    color: #28a745;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+p.no-games {
+    text-align: center;
+    font-style: italic;
+    color: #868e96;
+    margin-top: 20px;
+    font-size: 16px;
+}
+</style>
+{% endblock %}
+
+{% block content%}
+
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+
+            <div class="user-purchased-games">
+                <h2>Ваши купленные игры</h2>
+            
+                {% if purchased_games %}
+                  <ul class="purchased-games-list">
+                    {% for purchase in purchased_games %}
+                      <li>
+                        <a href="{% url 'game_detail' pk=purchase.game.id %}">
+                          <div class="game-info">
+                            <div class="game-title">
+                              {{ purchase.game.title }}
+                            </div>
+                            <div class="game-details">
+                              <p>Дата покупки: {{ purchase.purchase_date|date:"F d, Y" }}</p>
+                              <p>Цена: {{ purchase.game.price }} руб.</p>
+                            </div>
+                          </div>
+                        </a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% else %}
+                  <p class="no-games">Вы еще не купили ни одной игры.</p>
+                {% endif %}
+              </div>
+{% endblock %}
